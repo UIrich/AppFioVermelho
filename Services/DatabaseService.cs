@@ -5,13 +5,18 @@ namespace AppFioVermelho.Services
 {
     public class DatabaseService
     {
-        public SQLiteConnection connection;
+        private SQLiteConnection _connection;
 
-        public SQLiteConnection GetConnection()
+        public DatabaseService()
         {
             var folder = new LocalRootFolder();
             var file = folder.CreateFile("fiovermelho.db", PCLExt.FileStorage.CreationCollisionOption.OpenIfExists);
-            return new SQLiteConnection(file.Path);
+            _connection = new SQLiteConnection(file.Path);
+        }
+
+        public SQLiteConnection GetConnection()
+        {
+            return _connection;
         }
     }
 }
