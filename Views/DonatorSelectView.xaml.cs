@@ -9,7 +9,8 @@ public partial class DonatorSelectView : ContentPage
 		InitializeComponent();
 
         var userVM = new UserViewModel();
+        var donationVM = new DonationViewModel(userVM);
 
-        BindingContext = userVM;
+        BindingContext = donationVM;
     }
 }

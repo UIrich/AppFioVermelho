@@ -7,48 +7,83 @@
     Title="Área do Administrador"
     BackgroundColor="#FFF5F5F5">
 
-    <ScrollView>
-        <VerticalStackLayout Padding="30" Spacing="20" HorizontalOptions="Center">
+    <Grid>
+        <ScrollView>
+            <VerticalStackLayout Padding="30" Spacing="20"
+                                 HorizontalOptions="Center">
 
-            <Label Text="Área do Administrador"
-                   FontSize="26"
-                   FontAttributes="Bold"
-                   HorizontalOptions="Center"
-                   TextColor="#B71C1C"/>
+                <Label Text="Área do Administrador"
+                       FontSize="26"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center"
+                       TextColor="#B71C1C"/>
 
-            <Label Text="{Binding NomeUsuarioLogado, StringFormat='Bem-vindo, {0}!'}"
-                   FontSize="16"
-                   HorizontalOptions="Center"
-                   TextColor="#333333"
-                   Margin="0,5,0,20"/>
+                <Label Text="{Binding NomeUsuarioLogado, StringFormat='Bem-vindo, {0}!'}"
+                       FontSize="16"
+                       HorizontalOptions="Center"
+                       TextColor="#333333"
+                       Margin="0,5,0,20"/>
 
-            <Button Text="Cadastrar Doação"
-                    BackgroundColor="#B71C1C"
-                    TextColor="White"
-                    Command="{Binding AbrirCadastroDoacaoCommand}"
-                    HeightRequest="50"
-                    CornerRadius="12"/>
+                <Button Text="Cadastrar Doação"
+                        BackgroundColor="#B71C1C"
+                        TextColor="White"
+                        Command="{Binding AbrirCadastroDoacaoCommand}"
+                        HeightRequest="50"
+                        CornerRadius="12"
+                        HorizontalOptions="Center"
+                        WidthRequest="200"/>
 
-            <Button Text="Listar Doações"
-                    BackgroundColor="#880E4F"
-                    TextColor="White"
-                    Command="{Binding AbrirListaDoacoesCommand}"
-                    HeightRequest="50"
-                    CornerRadius="12"/>
+                <Button Text="Listar Doações"
+                        BackgroundColor="#880E4F"
+                        TextColor="White"
+                        Command="{Binding AbrirListaDoacoesCommand}"
+                        HeightRequest="50"
+                        CornerRadius="12"
+                        HorizontalOptions="Center"
+                        WidthRequest="200"/>
 
-            <Button Text="Ver Histórico"
-                    BackgroundColor="#1A237E"
-                    TextColor="White"
-                    Command="{Binding VerHistoricoCommand}"
-                    HeightRequest="50"
-                    CornerRadius="12"/>
+                <Button Text="Ver Histórico"
+                        BackgroundColor="#1A237E"
+                        TextColor="White"
+                        Command="{Binding VerHistoricoCommand}"
+                        HeightRequest="50"
+                        CornerRadius="12"
+                        HorizontalOptions="Center"
+                        WidthRequest="200"/>
 
-            <Button Text="Sair"
-                    BackgroundColor="#F57C00"
-                    TextColor="White"
-                    Command="{Binding SairCommand}"
-                    HeightRequest="50"
-                    CornerRadius="12"/>
-        </VerticalStackLayout>
-    </ScrollView>
+                <CollectionView ItemsSource="{Binding Historico}" 
+                                Margin="0,10,0,20"
+                                HorizontalOptions="Center"
+                                WidthRequest="300">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame Padding="15" Margin="0,5"
+                                   BorderColor="#1A237E"
+                                   CornerRadius="15"
+                                   HasShadow="True"
+                                   BackgroundColor="White"
+                                   HorizontalOptions="FillAndExpand">
+                                <VerticalStackLayout Spacing="5">
+                                    <Label Text="{Binding Instituicao}" FontAttributes="Bold" TextColor="#333"/>
+                                    <Label Text="{Binding TipoSangue}" TextColor="#555"/>
+                                    <Label Text="{Binding UserName}" FontSize="14" TextColor="#777"/>
+                                    <Label Text="{Binding DateTime, StringFormat='Doação em {0:dd/MM/yyyy HH:mm}'}" FontSize="12" TextColor="#999"/>
+                                </VerticalStackLayout>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+                <Button Text="Sair"
+                        BackgroundColor="#F57C00"
+                        TextColor="White"
+                        Command="{Binding SairCommand}"
+                        HeightRequest="50"
+                        CornerRadius="12"
+                        HorizontalOptions="Center"
+                        WidthRequest="200"/>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
 </ContentPage>

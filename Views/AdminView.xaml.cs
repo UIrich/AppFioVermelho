@@ -4,10 +4,15 @@ namespace AppFioVermelho.Views;
 
 public partial class AdminView : ContentPage
 {
-	public AdminView()
+    private UserViewModel userVM;
+    private DonationViewModel donationVM;
+    public AdminView()
 	{
 		InitializeComponent();
 
-        this.BindingContext = new UserViewModel();
+        userVM = new UserViewModel();
+        donationVM = new DonationViewModel(userVM);
+
+        BindingContext = donationVM;
     }
 }

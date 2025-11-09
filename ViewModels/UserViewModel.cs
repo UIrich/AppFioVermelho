@@ -14,7 +14,7 @@ namespace AppFioVermelho.ViewModels
 
         public UserViewModel()
         {
-            DonationVM = new DonationViewModel();
+            DonationVM = new DonationViewModel(this);
 
             userService = new UserService(new DatabaseService());
             currentUserService = CurrentUserService.Instance;
@@ -81,11 +81,20 @@ namespace AppFioVermelho.ViewModels
 
         public void AbrirCadastroUsuario()
         {
+            LimparCampos();
             OpenView(new SigninView());
         }
 
         public void Cadastrar()
         {
+            if (string.IsNullOrWhiteSpace(Nome) ||
+                string.IsNullOrWhiteSpace(Cpf) ||
+                string.IsNullOrWhiteSpace(Email) ||
+                string.IsNullOrWhiteSpace(Senha))
+            {
+                ShowError("Preencha todos os campos!");
+                return;
+            }
 
             User user = new User
             {
@@ -99,6 +108,7 @@ namespace AppFioVermelho.ViewModels
             userService.Inserir(user);
 
             ShowInfo("Cadastro realizado com sucesso!");
+            LimparCampos();
             Back(); 
         }
         public void AtualizarNomeUsuario()
@@ -114,6 +124,12 @@ namespace AppFioVermelho.ViewModels
         }
         public void Login()
         {
+            if (string.IsNullOrWhiteSpace(Email) || string.IsNullOrWhiteSpace(Senha))
+            {
+                ShowError("Preencha todos os campos!");
+                return;
+            }
+
             User user = userService.GetUsuarioPorEmail(Email);
 
             if (user != null && user.Senha == Senha)
@@ -134,21 +150,30 @@ namespace AppFioVermelho.ViewModels
             else
             {
                 ShowError("E-mail ou senha incorretos!");
+                LimparCampos();
             }
         }
 
         private void Sair()
         {
             currentUserService.ClearUser();
-
             AtualizarNomeUsuario();
-
+            LimparCampos();
             OpenView(new LoginView());
         }
 
         public void AbrirCadastroDoacao()
         {
             OpenView(new DonationView());
+        }
+
+        public void LimparCampos()
+        {
+            Nome = string.Empty;
+            Cpf = string.Empty;
+            Email = string.Empty;
+            Senha = string.Empty;
+            IsAdmin = false;
         }
 
         public void AbrirListaDoacoes()

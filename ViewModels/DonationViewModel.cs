@@ -8,12 +8,16 @@ namespace AppFioVermelho.ViewModels
 {
     public class DonationViewModel : BaseViewModel
     {
+        private readonly UserService userService;
         private readonly DonationService donationService;
         private readonly DonationLogService donationLogService;
         private readonly CurrentUserService currentUserService;
+        public UserViewModel UserVM { get; set; }
 
-        public DonationViewModel()
+        public DonationViewModel(UserViewModel userVM)
         {
+            UserVM = userVM;
+            userService = new UserService(new DatabaseService());
             donationService = new DonationService(new DatabaseService());
             donationLogService = new DonationLogService(new DatabaseService());
             currentUserService = CurrentUserService.Instance;
@@ -23,6 +27,7 @@ namespace AppFioVermelho.ViewModels
             ExcluirDoacaoCommand = new Command<Donation>(ExcluirDoacao);
             SelecionarDoacaoCommand = new Command<Donation>(SelecionarDoacao);
             AbrirEditarDoacaoCommand = new Command<Donation>(AbrirEditarDoacao);
+            AlternarHistoricoCommand = new Command(AbrirHistorico);
             VerHistoricoCommand = new Command(VerHistorico);
             ListarDoacoesCommand = new Command(ListarDoacoes);
 
@@ -63,10 +68,11 @@ namespace AppFioVermelho.ViewModels
             set { _mostrarHistorico = value; OnPropertyChanged(); }
         }
 
-        public ICommand AlternarHistoricoCommand { get; set; }
+        public string NomeUsuarioLogado => UserVM?.NomeUsuarioLogado ?? "Usuário";
 
         public ObservableCollection<Donation> Doacoes { get; set; }
         public ObservableCollection<DonationLog> Historico { get; set; }
+        public ICommand AlternarHistoricoCommand { get; set; }
 
         public ICommand SalvarDoacaoCommand { get; set; }
         public ICommand AbrirEditarDoacaoCommand { get; set; }
@@ -75,6 +81,9 @@ namespace AppFioVermelho.ViewModels
         public ICommand SelecionarDoacaoCommand { get; set; }
         public ICommand VerHistoricoCommand { get; set; }
         public ICommand ListarDoacoesCommand { get; set;  }
+        public ICommand SairCommand => UserVM?.SairCommand;
+        public ICommand AbrirCadastroDoacaoCommand => UserVM?.AbrirCadastroDoacaoCommand;
+        public ICommand AbrirListaDoacoesCommand => UserVM?.AbrirListaDoacoesCommand;
 
         private void CarregarDoacoes()
         {
@@ -86,6 +95,11 @@ namespace AppFioVermelho.ViewModels
         private void ListarDoacoes()
         {
             CarregarDoacoes();
+        }
+
+        private void AbrirHistorico()
+        {
+            MostrarHistorico = !MostrarHistorico;
         }
 
         private void SalvarDoacao()
@@ -202,25 +216,30 @@ namespace AppFioVermelho.ViewModels
             }
 
             var user = currentUserService.CurrentUser;
+            Historico.Clear();
 
+            IEnumerable<DonationLog> logs;
             if (user.IsAdmin)
-            {
-                foreach (var log in donationLogService.GetLogs())
-                    Historico.Add(log);
-            }
+                logs = donationLogService.GetLogs();
             else
+                logs = donationLogService.GetLogsPorUsuario(user.Id);
+
+            foreach (var log in logs)
             {
-                foreach (var log in donationLogService.GetLogsPorUsuario(user.Id))
-                    Historico.Add(log);
+                var doacao = donationService.GetDoacao(log.DonationId);
+                var usuario = userService.GetUsuario(log.UserId);
+
+                log.Instituicao = doacao?.Instituicao ?? "Desconhecido";
+                log.TipoSangue = doacao?.TipoSangue ?? "Desconhecido";
+                log.UserName = usuario?.Nome ?? "Desconhecido";
+
+                Historico.Add(log);
             }
 
             if (Historico.Count == 0)
-            {
                 ShowInfo("Nenhum histórico encontrado!");
-                return;
-            }
-
-            MostrarHistorico = !MostrarHistorico;
         }
+
+
     }
 }

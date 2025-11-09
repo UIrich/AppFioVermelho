@@ -8,6 +8,9 @@ public partial class AdminDonationView : ContentPage
 	{
 		InitializeComponent();
 
-        this.BindingContext = new DonationViewModel();
+        var userVM = new UserViewModel();
+        var donationVM = new DonationViewModel(userVM);
+
+        BindingContext = donationVM;
     }
 }

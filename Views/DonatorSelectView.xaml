@@ -7,61 +7,93 @@
     Title="Área do Doador"
     BackgroundColor="#FFF5F5F5">
 
-    <ScrollView>
-        <VerticalStackLayout Padding="30" Spacing="20">
+    <Grid>
+        <ScrollView>
+            <VerticalStackLayout Padding="30" Spacing="20" HorizontalOptions="Center">
 
-            <Label Text="Área do Doador"
-               FontSize="26"
-               FontAttributes="Bold"
-               HorizontalOptions="Center"
-               TextColor="#B71C1C"/>
+                <Label Text="Área do Doador"
+                       FontSize="26"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center"
+                       TextColor="#B71C1C"/>
 
-            <Label Text="{Binding NomeUsuarioLogado, StringFormat='Bem-vindo, {0}!'}"
-               FontSize="16"
-               HorizontalOptions="Center"
-               TextColor="#333333"
-               Margin="0,5,0,20"/>
+                <Label Text="{Binding NomeUsuarioLogado, StringFormat='Bem-vindo, {0}!'}"
+                       FontSize="16"
+                       HorizontalOptions="Center"
+                       TextColor="#333333"
+                       Margin="0,5,0,20"/>
 
-            <CollectionView ItemsSource="{Binding DonationVM.Doacoes}" 
-                        SelectedItem="{Binding DonationVM.DoacaoSelecionada}"
-                        HorizontalOptions="FillAndExpand">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Frame Padding="15" Margin="0,5" BorderColor="#B71C1C" CornerRadius="15" HasShadow="True" BackgroundColor="White" HorizontalOptions="Center" WidthRequest="300">
-                            <VerticalStackLayout Spacing="10">
-                                <Label Text="{Binding Instituicao}" FontAttributes="Bold" TextColor="#333"/>
-                                <Label Text="{Binding TipoSangue}" TextColor="#555"/>
-                                <Button Text="Selecionar"
-                                    Command="{Binding BindingContext.DonationVM.SelecionarDoacaoCommand, Source={x:Reference PageRoot}}"
-                                    CommandParameter="{Binding .}"
-                                    BackgroundColor="#B71C1C"
-                                    TextColor="White"
-                                    CornerRadius="10"
-                                    HeightRequest="45"/>
-                            </VerticalStackLayout>
-                        </Frame>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+                <CollectionView ItemsSource="{Binding Doacoes}" 
+                                SelectedItem="{Binding DoacaoSelecionada}"
+                                HorizontalOptions="Center"
+                                WidthRequest="300">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame Padding="15" Margin="0,5"
+                                   BorderColor="#B71C1C"
+                                   CornerRadius="15"
+                                   HasShadow="True"
+                                   BackgroundColor="White"
+                                   HorizontalOptions="FillAndExpand">
+                                <VerticalStackLayout Spacing="10">
+                                    <Label Text="{Binding Instituicao}" FontAttributes="Bold" TextColor="#333"/>
+                                    <Label Text="{Binding TipoSangue}" TextColor="#555"/>
+                                    <Button Text="Selecionar"
+                                            Command="{Binding BindingContext.SelecionarDoacaoCommand, Source={x:Reference PageRoot}}"
+                                            CommandParameter="{Binding .}"
+                                            BackgroundColor="#B71C1C"
+                                            TextColor="White"
+                                            CornerRadius="10"
+                                            HeightRequest="45"
+                                            HorizontalOptions="FillAndExpand"/>
+                                </VerticalStackLayout>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
 
-            <Button Text="Ver Histórico"
-                BackgroundColor="#1A237E"
-                TextColor="White"
-                CornerRadius="12"
-                HeightRequest="50"
-                HorizontalOptions="Center"
-                WidthRequest="200"
-                Command="{Binding VerHistoricoCommand}" />
+                <Button Text="Ver Histórico"
+                        BackgroundColor="#1A237E"
+                        TextColor="White"
+                        CornerRadius="12"
+                        HeightRequest="50"
+                        WidthRequest="200"
+                        HorizontalOptions="Center"
+                        Command="{Binding VerHistoricoCommand}" />
 
-            <Button Text="Sair" 
-                BackgroundColor="#F57C00"
-                TextColor="White"
-                CornerRadius="12"
-                HeightRequest="50"
-                HorizontalOptions="Center"
-                WidthRequest="200"
-                Command="{Binding SairCommand}" />
-        </VerticalStackLayout>
-    </ScrollView>
-    
+                <CollectionView ItemsSource="{Binding Historico}"
+                                Margin="0,10,0,20"
+                                HorizontalOptions="Center"
+                                WidthRequest="300">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame Padding="15" Margin="0,5"
+                                   BorderColor="#1A237E"
+                                   CornerRadius="15"
+                                   HasShadow="True"
+                                   BackgroundColor="White"
+                                   HorizontalOptions="FillAndExpand">
+                                <VerticalStackLayout Spacing="5">
+                                    <Label Text="{Binding Instituicao}" FontAttributes="Bold" TextColor="#333"/>
+                                    <Label Text="{Binding TipoSangue}" TextColor="#555"/>
+                                    <Label Text="{Binding UserName}" FontSize="14" TextColor="#777"/>
+                                    <Label Text="{Binding DateTime, StringFormat='Doação em {0:dd/MM/yyyy HH:mm}'}" FontSize="12" TextColor="#999"/>
+                                </VerticalStackLayout>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+                <Button Text="Sair" 
+                        BackgroundColor="#F57C00"
+                        TextColor="White"
+                        CornerRadius="12"
+                        HeightRequest="50"
+                        WidthRequest="200"
+                        HorizontalOptions="Center"
+                        Command="{Binding SairCommand}" />
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
 </ContentPage>
