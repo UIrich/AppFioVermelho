@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="AppFioVermelho.Views.DonationView"
+    Title="Cadastro de Doação"
+    BackgroundColor="#FFF5F5F5">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="30" Spacing="20" HorizontalOptions="Center">
+
+            <Label Text="Cadastro de Doação"
+                   FontSize="26"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   TextColor="#B71C1C"/>
+
+            <Frame BackgroundColor="White"
+                   CornerRadius="20"
+                   Padding="20"
+                   HasShadow="True">
+
+                <VerticalStackLayout Spacing="15">
+
+                    <Label Text="Instituição" FontAttributes="Bold" TextColor="#333333"/>
+                    <Frame BackgroundColor="#F5F5F5" CornerRadius="10" Padding="5">
+                        <Entry Text="{Binding Instituicao}" Placeholder="Instituição" TextColor="#000"/>
+                    </Frame>
+
+     
+                    <Label Text="Tipo Sanguíneo" FontAttributes="Bold" TextColor="#333333"/>
+                    <Frame BackgroundColor="#F5F5F5" CornerRadius="10" Padding="5">
+                        <Picker TextColor="#000"
+                                SelectedItem="{Binding TipoSangue}">
+
+                            <Picker.Items>
+                                <x:String>A+</x:String>
+                                <x:String>A-</x:String>
+                                <x:String>B+</x:String>
+                                <x:String>B-</x:String>
+                                <x:String>AB+</x:String>
+                                <x:String>AB-</x:String>
+                                <x:String>O+</x:String>
+                                <x:String>O-</x:String>
+                            </Picker.Items>
+                        </Picker>
+                    </Frame>
+
+                    <Button Text="Salvar"
+                            Command="{Binding SalvarDoacaoCommand}"
+                            BackgroundColor="#B71C1C"
+                            TextColor="White"
+                            FontAttributes="Bold"
+                            HeightRequest="50"
+                            CornerRadius="12"/>
+
+                    <Button Text="Voltar"
+                    Command="{Binding BackCommand}"
+                    BackgroundColor="#F57C00"
+                    TextColor="White"
+                    CornerRadius="12"
+                    HeightRequest="50"/>
+                </VerticalStackLayout>
+            </Frame>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

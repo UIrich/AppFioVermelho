@@ -20,6 +20,16 @@ namespace AppFioVermelho.Services
             _connection.Insert(donation);
         }
 
+        public void Atualizar(Donation donation)
+        {
+            _connection.Update(donation);
+        }
+
+        public void Deletar(Donation donation)
+        {
+            _connection.Delete(donation);
+        }
+
         public Donation GetDoacao(int id)
         {
             return _connection.Table<Donation>().FirstOrDefault(d => d.Id == id);

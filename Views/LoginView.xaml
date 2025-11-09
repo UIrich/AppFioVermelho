@@ -1,12 +1,90 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="AppFioVermelho.Views.LoginView"
-             Title="LoginView">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+<ContentPage 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="AppFioVermelho.Views.LoginView"
+    Title="Login"
+    BackgroundColor="#FFF5F5F5">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="30" Spacing="25" HorizontalOptions="Center">
+
+            <Frame 
+                Padding="20"
+                BackgroundColor="#B71C1C"
+                CornerRadius="100"
+                HeightRequest="150"
+                WidthRequest="150"
+                HasShadow="True"
+                HorizontalOptions="Center">
+                <Image
+                    Source="doar.png"
+                    Aspect="AspectFit"
+                    HeightRequest="100"
+                    WidthRequest="100"/>
+            </Frame>
+
+            <Label
+                Text="Fio Vermelho"
+                FontSize="28"
+                FontAttributes="Bold"
+                HorizontalOptions="Center"
+                TextColor="#B71C1C"/>
+
+            <Frame
+                BackgroundColor="White"
+                CornerRadius="20"
+                Padding="20"
+                HasShadow="True">
+
+                <VerticalStackLayout Spacing="15">
+
+                    <Label Text="E-mail" FontAttributes="Bold" TextColor="#333333"/>
+                    <Frame BackgroundColor="#F5F5F5" CornerRadius="10" Padding="5">
+                        <Entry 
+                            Text="{Binding Email}" 
+                            Keyboard="Email"
+                            Placeholder="seu@email.com"
+                            TextColor="#000000"/>
+                    </Frame>
+
+                    <Label Text="Senha" FontAttributes="Bold" TextColor="#333333"/>
+                    <Frame BackgroundColor="#F5F5F5" CornerRadius="10" Padding="5">
+                        <Entry 
+                            Text="{Binding Senha}" 
+                            IsPassword="True" 
+                            Placeholder="Insira sua senha"
+                            TextColor="#000000"/>
+                    </Frame>
+
+                    <Button
+                        Text="Entrar"
+                        Command="{Binding LoginCommand}"
+                        BackgroundColor="#B71C1C"
+                        TextColor="White"
+                        FontAttributes="Bold"
+                        HeightRequest="50"
+                        CornerRadius="12"
+                        HorizontalOptions="FillAndExpand"/>
+
+                    <Label HorizontalOptions="Center">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Não possui uma conta? " TextColor="#555555"/>
+                                <Span 
+                                    Text="Registre-se"
+                                    TextColor="#B71C1C"
+                                    FontAttributes="Bold"
+                                    TextDecorations="Underline"/>
+                            </FormattedString>
+                        </Label.FormattedText>
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding AbrirCadastroUsuarioCommand}" />
+                        </Label.GestureRecognizers>
+                    </Label>
+
+                </VerticalStackLayout>
+            </Frame>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

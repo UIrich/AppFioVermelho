@@ -1,12 +1,59 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="AppFioVermelho.Views.AdminDonationView"
-             Title="AdminDonationView">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+<ContentPage 
+    x:Name="PageRoot"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="AppFioVermelho.Views.AdminDonationView"
+    Title="Lista de Doações"
+    BackgroundColor="#FFF5F5F5">
+
+    <ScrollView Padding="20">
+        <VerticalStackLayout Spacing="15">
+
+            <Label Text="Lista de Doações"
+                   FontSize="26"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   TextColor="#B71C1C"/>
+
+            <CollectionView ItemsSource="{Binding Doacoes}" SelectionMode="Single"
+                            SelectedItem="{Binding DoacaoSelecionada}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Padding="15" Margin="0,5" BorderColor="#B71C1C" CornerRadius="15" HasShadow="True" BackgroundColor="White">
+                            <VerticalStackLayout Spacing="10">
+
+                                <Label Text="{Binding Instituicao}" FontAttributes="Bold" TextColor="#333"/>
+                                <Label Text="{Binding TipoSangue}" TextColor="#555"/>
+
+                                <HorizontalStackLayout Spacing="10">
+                                    <Button Text="Editar"
+                                            Command="{Binding Source={x:Reference PageRoot}, Path=BindingContext.AbrirEditarDoacaoCommand}"
+                                            CommandParameter="{Binding .}"
+                                            BackgroundColor="#1A237E"
+                                            TextColor="White"
+                                            CornerRadius="10"
+                                            HeightRequest="40"/>
+                                    <Button Text="Excluir"
+                                            Command="{Binding Source={x:Reference PageRoot}, Path=BindingContext.ExcluirDoacaoCommand}"
+                                            CommandParameter="{Binding .}"
+                                            BackgroundColor="#B71C1C"
+                                            TextColor="White"
+                                            CornerRadius="10"
+                                            HeightRequest="40"/>
+                                </HorizontalStackLayout>
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <Button Text="Voltar"
+                    Command="{Binding BackCommand}"
+                    BackgroundColor="#F57C00"
+                    TextColor="White"
+                    CornerRadius="12"
+                    HeightRequest="50"/>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

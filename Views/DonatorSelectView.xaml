@@ -1,12 +1,67 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="AppFioVermelho.Views.DonatorSelectView"
-             Title="DonatorSelectView">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+<ContentPage 
+    x:Name="PageRoot"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="AppFioVermelho.Views.DonatorSelectView"
+    Title="Área do Doador"
+    BackgroundColor="#FFF5F5F5">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="30" Spacing="20">
+
+            <Label Text="Área do Doador"
+               FontSize="26"
+               FontAttributes="Bold"
+               HorizontalOptions="Center"
+               TextColor="#B71C1C"/>
+
+            <Label Text="{Binding NomeUsuarioLogado, StringFormat='Bem-vindo, {0}!'}"
+               FontSize="16"
+               HorizontalOptions="Center"
+               TextColor="#333333"
+               Margin="0,5,0,20"/>
+
+            <CollectionView ItemsSource="{Binding DonationVM.Doacoes}" 
+                        SelectedItem="{Binding DonationVM.DoacaoSelecionada}"
+                        HorizontalOptions="FillAndExpand">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Padding="15" Margin="0,5" BorderColor="#B71C1C" CornerRadius="15" HasShadow="True" BackgroundColor="White" HorizontalOptions="Center" WidthRequest="300">
+                            <VerticalStackLayout Spacing="10">
+                                <Label Text="{Binding Instituicao}" FontAttributes="Bold" TextColor="#333"/>
+                                <Label Text="{Binding TipoSangue}" TextColor="#555"/>
+                                <Button Text="Selecionar"
+                                    Command="{Binding BindingContext.DonationVM.SelecionarDoacaoCommand, Source={x:Reference PageRoot}}"
+                                    CommandParameter="{Binding .}"
+                                    BackgroundColor="#B71C1C"
+                                    TextColor="White"
+                                    CornerRadius="10"
+                                    HeightRequest="45"/>
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <Button Text="Ver Histórico"
+                BackgroundColor="#1A237E"
+                TextColor="White"
+                CornerRadius="12"
+                HeightRequest="50"
+                HorizontalOptions="Center"
+                WidthRequest="200"
+                Command="{Binding VerHistoricoCommand}" />
+
+            <Button Text="Sair" 
+                BackgroundColor="#F57C00"
+                TextColor="White"
+                CornerRadius="12"
+                HeightRequest="50"
+                HorizontalOptions="Center"
+                WidthRequest="200"
+                Command="{Binding SairCommand}" />
+        </VerticalStackLayout>
+    </ScrollView>
+    
 </ContentPage>

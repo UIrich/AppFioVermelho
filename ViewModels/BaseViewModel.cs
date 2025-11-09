@@ -4,8 +4,10 @@ namespace AppFioVermelho.ViewModels
 {
     public class BaseViewModel : BaseNotifyViewModel
     {
+        public ICommand BackCommand { get; set; }
         public BaseViewModel()
         {
+            BackCommand = new Command(Back);
         }
 
         public async void Back()
